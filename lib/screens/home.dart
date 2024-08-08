@@ -2,12 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zeeeeee/models/usersss.dart';
 import 'package:zeeeeee/services/firebase_service.dart';
+import 'package:zeeeeee/static.dart';
 import 'package:zeeeeee/widgets/top_bar.dart';
 import 'package:zeeeeee/widgets/user_card.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+  
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

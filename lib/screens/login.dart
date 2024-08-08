@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:zeeeeee/main.dart';
 import 'package:zeeeeee/screens/home.dart';
@@ -5,6 +6,10 @@ import 'package:zeeeeee/screens/signup.dart';
 import 'package:zeeeeee/services/firebase_service.dart';
 import 'package:zeeeeee/widgets/loading_holder.dart';
 import 'package:zeeeeee/widgets/top_bar.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+
+import '../static.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -88,8 +93,7 @@ class _LoginState extends State<Login> {
                           ),
                           TextButton(
                             onPressed: () {
-                              MainApp.navigatorKey.currentState
-                                  ?.push(MaterialPageRoute(
+                             Navigator.push(context,MaterialPageRoute(
                                 builder: (ctx) => const SignUp(),
                               ));
                             },
@@ -120,13 +124,7 @@ class _LoginState extends State<Login> {
                             );
 
                             if (result && mounted) {
-                              MainApp.navigatorKey.currentState
-                                  ?.pushAndRemoveUntil(
-                                MaterialPageRoute(
-                                  builder: (ctx) => const Home(),
-                                ),
-                                    (route) => false,
-                              );
+                             onLogin(context);
                             } else {
                               if (mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -153,5 +151,35 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  void onLogin(BuildContext context) {
+
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: Statics.appID /*input your AppID*/,
+      appSign: Statics.appSign /*input your AppSign*/,
+      userID: FirebaseService.currentUser.email,
+      userName: FirebaseService.currentUser.name,
+      plugins: [ZegoUIKitSignalingPlugin()],
+      notificationConfig: ZegoCallInvitationNotificationConfig(
+        androidNotificationConfig: ZegoCallAndroidNotificationConfig(
+          showFullScreen: true,
+          channelID: "ZegoUIKit",
+          channelName: "Call Notifications",
+          sound: "call",
+          icon: "call",
+        ),
+        iOSNotificationConfig: ZegoCallIOSNotificationConfig(
+          systemCallingIconName: 'CallKitIcon',
+        ),
+      ),
+    );
+      Navigator.pushAndRemoveUntil(
+      context,
+       MaterialPageRoute(
+         builder: (ctx) => const Home(),
+       ),
+           (route) => false,
+     );
   }
 }

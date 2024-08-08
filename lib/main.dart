@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:zeeeeee/screens/login.dart';
 import 'package:zeeeeee/services/firebase_service.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseService.setupFirebase();
-  runApp(const MainApp());
+  ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
+
+  ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
+
+  // call the useSystemCallingUI
+  ZegoUIKit().initLog().then((value) {
+    ZegoUIKitPrebuiltCallInvitationService().useSystemCallingUI(
+      [ZegoUIKitSignalingPlugin()],
+    );
+
+    runApp(MainApp(navigatorKey: navigatorKey));
+  });
 }
 
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  static final GlobalKey<NavigatorState> navigatorKey =
-  GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey;
+  const MainApp({super.key, required this.navigatorKey});
 
   @override
   Widget build(BuildContext context) {
-
-    const primaryColor = Color(0xff4338CA);
-    const secondaryColor = Color(0xff6D28D9);
 
     return MaterialApp(
       navigatorKey: navigatorKey,
