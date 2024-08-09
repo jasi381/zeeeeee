@@ -6,6 +6,7 @@ import 'package:zeeeeee/static.dart';
 import 'package:zeeeeee/widgets/top_bar.dart';
 import 'package:zeeeeee/widgets/user_card.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,6 +18,18 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
+  @override
+  void initState() {
+    ZegoUIKitPrebuiltCallInvitationService().init(
+      appID: Statics.appID /*input your AppID*/,
+      appSign: Statics.appSign /*input your AppSign*/,
+      userID: FirebaseService.currentUser.email,
+      userName:  FirebaseService.currentUser.username,
+      plugins: [ZegoUIKitSignalingPlugin()],
+    );
+    super.initState();
+  }
   
   @override
   Widget build(BuildContext context) {

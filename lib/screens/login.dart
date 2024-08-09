@@ -155,25 +155,6 @@ class _LoginState extends State<Login> {
 
   void onLogin(BuildContext context) {
 
-    ZegoUIKitPrebuiltCallInvitationService().init(
-      appID: Statics.appID /*input your AppID*/,
-      appSign: Statics.appSign /*input your AppSign*/,
-      userID: FirebaseService.currentUser.email,
-      userName: FirebaseService.currentUser.name,
-      plugins: [ZegoUIKitSignalingPlugin()],
-      notificationConfig: ZegoCallInvitationNotificationConfig(
-        androidNotificationConfig: ZegoCallAndroidNotificationConfig(
-          showFullScreen: true,
-          channelID: "ZegoUIKit",
-          channelName: "Call Notifications",
-          sound: "call",
-          icon: "call",
-        ),
-        iOSNotificationConfig: ZegoCallIOSNotificationConfig(
-          systemCallingIconName: 'CallKitIcon',
-        ),
-      ),
-    );
       Navigator.pushAndRemoveUntil(
       context,
        MaterialPageRoute(
@@ -181,5 +162,9 @@ class _LoginState extends State<Login> {
        ),
            (route) => false,
      );
+
   }
+}
+void onUserLogout() {
+  ZegoUIKitPrebuiltCallInvitationService().uninit();
 }

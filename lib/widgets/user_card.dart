@@ -78,9 +78,10 @@ class _UserCardState extends State<UserCard> {
         resourceID: "zego_call",
         invitees: [
           ZegoUIKitUser(
-            id: widget.userModel.username,
-            name: widget.userModel.name,
+            id: widget.userModel.email,
+            name: widget.userModel.username,
           ),
+          
         ],
       );
 }
